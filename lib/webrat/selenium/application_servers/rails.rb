@@ -30,14 +30,17 @@ module Webrat
           prepare_pid_file("#{RAILS_ROOT}/tmp/pids", "mongrel_selenium.pid")
         end
 
-        def start_command
-        "mongrel_rails start -d --chdir='#{RAILS_ROOT}' --port=#{Webrat.configuration.application_port} --environment=#{Webrat.configuration.application_environment} --pid #{pid_file} &"
+        def server_script
+          Rails.version.to_f >= 3.0 ? "#{RAILS_ROOT}/script/rails server" : "#{RAILS_ROOT}/script/server" 
+        end
+
+        def start_comman
+          "#{server_script} --port #{Webrat.configuration.application_port} -e #{Webrat.configuration.application_environment} --pid #{pid_file} &"
         end
 
         def stop_command
-        "mongrel_rails stop -c #{RAILS_ROOT} --pid #{pid_file}"
+          "kill -KILL `cat #{pid_file}`"
         end
-
       end
     end
   end
