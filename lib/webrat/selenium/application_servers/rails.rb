@@ -31,10 +31,10 @@ module Webrat
         end
 
         def server_script
-          Rails.version.to_f >= 3.0 ? "#{RAILS_ROOT}/script/rails server" : "#{RAILS_ROOT}/script/server" 
+          ::Rails.version.to_f >= 3.0 ? "#{RAILS_ROOT}/script/rails server" : "#{RAILS_ROOT}/script/server" 
         end
 
-        def start_comman
+        def start_command
           "#{server_script} --port #{Webrat.configuration.application_port} -e #{Webrat.configuration.application_environment} --pid #{pid_file} &"
         end
 
