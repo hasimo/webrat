@@ -115,7 +115,7 @@ module Webrat
     end
 
     def self.parse_rails_request_params(query_string)
-      if defined?(ActionController::AbstractRequest)
+      if Rails.version.to_f < 3.0 && defined?(ActionController::AbstractRequest)
         ActionController::AbstractRequest.parse_query_parameters(query_string)
       elsif defined?(ActionController::UrlEncodedPairParser)
         ActionController::UrlEncodedPairParser.parse_query_parameters(query_string)

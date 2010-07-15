@@ -1,5 +1,10 @@
 require "action_controller"
-require "action_controller/integration"
+if Rails.version.to_f >= 3.0
+  require 'action_dispatch/testing/integration'
+else 
+  require "action_controller/integration"
+end
+
 
 module ActionController #:nodoc:
   IntegrationTest.class_eval do

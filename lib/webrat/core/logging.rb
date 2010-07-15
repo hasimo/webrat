@@ -11,7 +11,11 @@ module Webrat
     def logger # :nodoc:
       case Webrat.configuration.mode
       when :rails
-        defined?(RAILS_DEFAULT_LOGGER) ? RAILS_DEFAULT_LOGGER : nil
+        if Rails.version.to_f >= 3.0
+          Rails.logger
+        else 
+          defined?(RAILS_DEFAULT_LOGGER) ? RAILS_DEFAULT_LOGGER : nil
+        end
       when :merb
         ::Merb.logger
       else
